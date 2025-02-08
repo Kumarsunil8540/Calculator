@@ -21,7 +21,7 @@ jobs:
           pip install --upgrade pip
           pip install buildozer cython
 
-      - name: Install Android SDK & AIDL
+      - name: Install Android SDK & AIDL  # ✅ Memory Optimized SDK Install
         run: |
           export ANDROID_SDK_ROOT=$HOME/android-sdk
           export ANDROID_HOME=$ANDROID_SDK_ROOT
@@ -38,11 +38,13 @@ jobs:
           
           $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --sdk_root=$ANDROID_SDK_ROOT "platform-tools" "platforms;android-34" "build-tools;34.0.0" "ndk;25.2.9519653" "sources;android-34" "cmdline-tools;latest"
 
-      - name: Build APK
+      - name: Build APK  # ✅ FIXED: Disable Build Cache to Avoid File Closing Issue
         run: |
           export ANDROID_SDK_ROOT=$HOME/android-sdk
           export ANDROID_HOME=$ANDROID_SDK_ROOT
           export PATH=$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$ANDROID_SDK_ROOT/platform-tools:$ANDROID_SDK_ROOT/emulator:$ANDROID_SDK_ROOT/tools/bin:$PATH
+          
+          buildozer android clean  # ✅ Old Cache Delete Karein
           buildozer -v android debug
 
       - name: Upload APK
