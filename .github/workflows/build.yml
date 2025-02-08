@@ -52,17 +52,28 @@ jobs:
 
       - name: Build APK
         env:
-          P4A_NO_PREBUILT_DEPS: 1  # ✅ Prevent Prebuilt Packages from Failing
-          P4A_NUM_CORES: 1  # ✅ Force Single Threading to Fix "read of closed file"
+          P4A_NO_PREBUILT_DEPS: 1  # ✅ Fix Prebuilt Packages Issue
+          P4A_NUM_CORES: 1  # ✅ Single-Core Mode Me Run Karein
         run: |
           export ANDROID_SDK_ROOT=$HOME/android-sdk
           export ANDROID_HOME=$ANDROID_SDK_ROOT
           export PATH=$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$ANDROID_SDK_ROOT/platform-tools:$ANDROID_SDK_ROOT/emulator:$ANDROID_SDK_ROOT/tools/bin:$PATH
           
-          buildozer -v android debug 2>&1 | tee buildozer_log.txt  # ✅ Log Save Karein
+          buildozer -v android debug 2>&1 | tee buildozer_log.txt  # ✅ Build Log Save Karein
+
+      - name: Debugging - Check Bin Folder  # ✅ Bin Folder Exist Check Karein
+        run: |
+          ls -lah bin/
 
       - name: Upload APK
+        if: success()
         uses: actions/upload-artifact@v4
         with:
           name: kivy-apk
           path: bin/*.apk
+
+      - name: Upload Build Log  # ✅ Agar APK fail ho gaya to log file bhejein
+        uses: actions/upload-artifact@v4
+        with:
+          name: buildozer-log
+          path: buildozer_log.txt
