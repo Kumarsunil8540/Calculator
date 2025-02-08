@@ -37,8 +37,8 @@ version = 0.1
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = Python3,kivy,pillow ,requests
-android.arch = arm64-v8a, armeabi-v7a
+requirements = Python3,kivy
+android.arch = arm64-v8a
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
 # requirements.source.kivy = ../../kivy
@@ -295,6 +295,7 @@ android.allow_backup = True
 
 # (str) XML file for custom backup rules (see official auto backup documentation)
 # android.backup_rules =
+android.allow-armeabi-v7a = False
 
 # (str) If you need to insert variables into your AndroidManifest.xml file,
 # you can do so with the manifestPlaceholders property.
