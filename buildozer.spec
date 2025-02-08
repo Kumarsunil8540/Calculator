@@ -37,8 +37,8 @@ version = 0.1
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = Python3==3.10,hostpythone3==3.10,kivy,pillow
-
+requirements = Python3,kivy,pillow
+android.arch = arm64-v8a
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
 # requirements.source.kivy = ../../kivy
