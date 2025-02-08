@@ -19,9 +19,9 @@ jobs:
           sudo apt update
           sudo apt install -y python3-pip openjdk-17-jdk git zip unzip wget curl
           pip install --upgrade pip
-          pip install buildozer cython
+          pip install buildozer cython python-for-android==2024.04.10
 
-      - name: Install Android SDK & NDK
+      - name: Install Android SDK & AIDL
         run: |
           export ANDROID_SDK_ROOT=$HOME/android-sdk
           export ANDROID_HOME=$ANDROID_SDK_ROOT
@@ -38,15 +38,21 @@ jobs:
           
           $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --sdk_root=$ANDROID_SDK_ROOT "platform-tools" "platforms;android-34" "build-tools;34.0.0" "ndk;25.2.9519653" "sources;android-34" "cmdline-tools;latest"
 
-      - name: Fix Buildozer Environment
+      - name: Fix Buildozer Platform Issue  # ✅ Missing Directory Fix
+        run: |
+          mkdir -p /home/runner/work/Calculator/Calculator/.buildozer/android/platform/python-for-android
+          buildozer android clean  # ✅ Purana Build Cache Delete Karein
+
+      - name: Build APK
         run: |
           export ANDROID_SDK_ROOT=$HOME/android-sdk
-          export ANDROID_NDK_HOME=$ANDROID_SDK_ROOT/ndk/25.2.9519653
           export ANDROID_HOME=$ANDROID_SDK_ROOT
           export PATH=$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$ANDROID_SDK_ROOT/platform-tools:$ANDROID_SDK_ROOT/emulator:$ANDROID_SDK_ROOT/tools/bin:$PATH
           
-          mkdir -p /home/runner/work/Calculator/Calculator/.buildozer/android/platform/python-for-android
-          buildozer android clean
-          rm -rf /home/runner/work/Calculator/Calculator/.buildozer/android/platform/python-for-android
+          buildozer -v android debug
 
-      - name: Build APK
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: kivy-apk
+          path: bin/*.apk
