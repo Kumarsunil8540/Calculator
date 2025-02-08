@@ -44,18 +44,22 @@ jobs:
           
           $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --sdk_root=$ANDROID_SDK_ROOT "platform-tools" "platforms;android-34" "build-tools;34.0.0" "ndk;25.2.9519653" "sources;android-34" "cmdline-tools;latest"
 
-      - name: Fix Buildozer Platform Issue  # ✅ Missing Directory Fix
+      - name: Fix Buildozer Memory Issue  # ✅ Prevent Build Crashes
         run: |
           mkdir -p /home/runner/work/Calculator/Calculator/.buildozer/android/platform/python-for-android
-          buildozer android clean  # ✅ Purana Build Cache Delete Karein
+          buildozer android clean  # ✅ Purana Cache Delete Karein
+          rm -rf ~/.cython  # ✅ Cython Cache Delete Karein
 
       - name: Build APK
+        env:
+          P4A_NO_PREBUILT_DEPS: 1  # ✅ Prevent Prebuilt Packages from Failing
+          P4A_NUM_CORES: 1  # ✅ Force Single Threading to Fix "read of closed file"
         run: |
           export ANDROID_SDK_ROOT=$HOME/android-sdk
           export ANDROID_HOME=$ANDROID_SDK_ROOT
           export PATH=$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$ANDROID_SDK_ROOT/platform-tools:$ANDROID_SDK_ROOT/emulator:$ANDROID_SDK_ROOT/tools/bin:$PATH
           
-          buildozer -v android debug
+          buildozer -v android debug 2>&1 | tee buildozer_log.txt  # ✅ Log Save Karein
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
