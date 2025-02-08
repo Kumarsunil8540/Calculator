@@ -156,7 +156,7 @@ android.ndk_path =$HOME/android-sdk/ndk/25.2.9519653
 # (str) Full name including package path of the Java class that implements Python Service
 # use that parameter to set custom Java class which extends PythonService
 #android.service_class_name = org.kivy.android.PythonService
-
+android.num_workers = 1
 # (str) Android app theme, default is ok for Kivy-based app
 # android.apptheme = "@android:style/Theme.NoTitleBar"
 
