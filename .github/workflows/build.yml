@@ -7,10 +7,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4  # ✅ Latest Version
+        uses: actions/checkout@v4
 
       - name: Setup Python
-        uses: actions/setup-python@v5  # ✅ Latest Version
+        uses: actions/setup-python@v5
         with:
           python-version: "3.10"
 
@@ -21,7 +21,7 @@ jobs:
           pip install --upgrade pip
           pip install buildozer cython
 
-      - name: Install Android SDK, AIDL & Build Tools  # ✅ PROPER FIXED SETUP
+      - name: Install Android SDK & AIDL
         run: |
           export ANDROID_SDK_ROOT=$HOME/android-sdk
           export ANDROID_HOME=$ANDROID_SDK_ROOT
@@ -29,19 +29,13 @@ jobs:
           
           mkdir -p $ANDROID_SDK_ROOT/cmdline-tools
           cd $ANDROID_SDK_ROOT/cmdline-tools
-          
-          # ✅ Download Latest Android Command Line Tools
           wget https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip -O cmdline-tools.zip
           unzip cmdline-tools.zip
           mv cmdline-tools latest
           
-          # ✅ Fix for "sdkmanager: command not found"
           chmod +x $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager
-          
-          # ✅ Accept Licenses
           yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --licenses
           
-          # ✅ Install Required Android Packages
           $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --sdk_root=$ANDROID_SDK_ROOT "platform-tools" "platforms;android-34" "build-tools;34.0.0" "ndk;25.2.9519653" "sources;android-34" "cmdline-tools;latest"
 
       - name: Build APK
@@ -49,12 +43,10 @@ jobs:
           export ANDROID_SDK_ROOT=$HOME/android-sdk
           export ANDROID_HOME=$ANDROID_SDK_ROOT
           export PATH=$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$ANDROID_SDK_ROOT/platform-tools:$ANDROID_SDK_ROOT/emulator:$ANDROID_SDK_ROOT/tools/bin:$PATH
-          
-          # ✅ Run Buildozer
           buildozer -v android debug
 
       - name: Upload APK
-        uses: actions/upload-artifact@v4  # ✅ Latest Version
+        uses: actions/upload-artifact@v4
         with:
           name: kivy-apk
           path: bin/*.apk
