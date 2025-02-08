@@ -27,7 +27,7 @@ jobs:
           cd python-for-android
           pip install .
 
-      - name: Install Android SDK & NDK (Manual Fix)  # ✅ NDK Manual Fix
+      - name: Install Android SDK & NDK (Manual Fix)  # ✅ FIX: NDK Manually Install
         run: |
           export ANDROID_SDK_ROOT=$HOME/android-sdk
           export ANDROID_HOME=$ANDROID_SDK_ROOT
@@ -44,6 +44,7 @@ jobs:
           
           # ✅ MANUALLY INSTALL NDK (FIX)
           $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --sdk_root=$ANDROID_SDK_ROOT "ndk;25.2.9519653"
+          export ANDROID_NDK_HOME=$ANDROID_SDK_ROOT/ndk/25.2.9519653
           export ANDROID_NDK=$ANDROID_SDK_ROOT/ndk/25.2.9519653
           export PATH=$ANDROID_NDK:$PATH
 
@@ -60,6 +61,7 @@ jobs:
         run: |
           export ANDROID_SDK_ROOT=$HOME/android-sdk
           export ANDROID_HOME=$ANDROID_SDK_ROOT
+          export ANDROID_NDK_HOME=$ANDROID_SDK_ROOT/ndk/25.2.9519653
           export ANDROID_NDK=$ANDROID_SDK_ROOT/ndk/25.2.9519653
           export PATH=$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$ANDROID_SDK_ROOT/platform-tools:$ANDROID_SDK_ROOT/emulator:$ANDROID_SDK_ROOT/tools/bin:$ANDROID_NDK:$PATH
           
