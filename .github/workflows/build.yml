@@ -19,7 +19,13 @@ jobs:
           sudo apt update
           sudo apt install -y python3-pip openjdk-17-jdk git zip unzip wget curl
           pip install --upgrade pip
-          pip install buildozer cython python-for-android==2024.04.10
+          pip install buildozer cython
+
+      - name: Manually Install Python-for-Android  # ✅ FIX: Clone & Install Manually
+        run: |
+          git clone --depth=1 https://github.com/kivy/python-for-android.git
+          cd python-for-android
+          pip install .
 
       - name: Install Android SDK & AIDL
         run: |
