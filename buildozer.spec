@@ -37,7 +37,7 @@ version = 0.1
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = Python3==3.7.6,hostpythone3==3.7.6,kivy,pillow
+requirements = Python3==3.10,hostpythone3==3.10,kivy,pillow
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
@@ -64,7 +64,7 @@ orientation = portrait
 # author = © Copyright Info
 
 # change the major version of python used by the app
-osx.python_version = 3.7.6
+osx.python_version = 3.10
 
 # Kivy version to use
 osx.kivy_version = 1.9.1
@@ -101,25 +101,25 @@ fullscreen = 0
 #android.features = android.hardware.usb.host
 
 # (int) Target Android API, should be as high as possible.
-#android.api = 31
+android.api = 34
 
 # (int) Minimum API your APK / AAB will support.
 #android.minapi = 21
 
 # (int) Android SDK version to use
-#android.sdk = 20
+android.sdk = 34
 
 # (str) Android NDK version to use
-#android.ndk = 23b
+android.ndk = 25.2.9519653
 
 # (int) Android NDK API to use. This is the minimum API your app will support, it should usually match android.minapi.
-#android.ndk_api = 21
+android.ndk_api = 21
 
 # (bool) Use --private data storage (True) or --dir public storage (False)
 #android.private_storage = True
 
 # (str) Android NDK directory (if empty, it will be automatically downloaded.)
-#android.ndk_path =
+android.ndk_path =$HOME/android-sdk/ndk/25.2.9519653
 
 # (str) Android SDK directory (if empty, it will be automatically downloaded.)
 #android.sdk_path =
@@ -207,6 +207,7 @@ fullscreen = 0
 # contains an 'androidx' package, or any package from Kotlin source.
 # android.enable_androidx requires android.api >= 28
 #android.enable_androidx = True
+android.permissions = INTERNET, WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE
 
 # (list) add java compile options
 # this can for example be necessary when importing certain java libraries using the 'android.gradle_dependencies' option
@@ -355,7 +356,8 @@ android.allow_backup = True
 
 #
 # iOS specific
-#
+android.release = 0
+
 
 # (str) Path to a custom kivy-ios folder
 #ios.kivy_ios_dir = ../kivy-ios
