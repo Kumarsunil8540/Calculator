@@ -37,8 +37,8 @@ version = 0.1
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = Python3,kivy
-android.arch = arm64-v8a
+#requirements = Python3,kivy
+#android.arch = arm64-v8a
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
 # requirements.source.kivy = ../../kivy
@@ -75,7 +75,17 @@ osx.kivy_version = 1.9.1
 
 # (bool) Indicate if the application should be fullscreen or not
 fullscreen = 0
-
+android.api = 34
+android.sdk = 34
+android.ndk = 25.2.9519653
+android.ndk_api = 21
+android.ndk_path = $HOME/android-sdk/ndk/25.2.9519653
+p4a.branch = develop
+requirements = python3,kivy
+android.arch = arm64-v8a
+android.allow-armeabi-v7a = False
+android.num_workers = 1
+android.release = 0
 # (string) Presplash background color (for android toolchain)
 # Supported formats are: #RRGGBB #AARRGGBB or one of the following names:
 # red, blue, green, black, white, gray, cyan, magenta, yellow, lightgray,
@@ -101,25 +111,25 @@ fullscreen = 0
 #android.features = android.hardware.usb.host
 
 # (int) Target Android API, should be as high as possible.
-android.api = 34
+#android.api = 34
 
 # (int) Minimum API your APK / AAB will support.
 #android.minapi = 21
 
 # (int) Android SDK version to use
-android.sdk = 34
+#android.sdk = 34
 
 # (str) Android NDK version to use
-android.ndk = 25.2.9519653
+#android.ndk = 25.2.9519653
 
 # (int) Android NDK API to use. This is the minimum API your app will support, it should usually match android.minapi.
-android.ndk_api = 21
+#android.ndk_api = 21
 
 # (bool) Use --private data storage (True) or --dir public storage (False)
 #android.private_storage = True
 
 # (str) Android NDK directory (if empty, it will be automatically downloaded.)
-android.ndk_path = $ANDROID_SDK_ROOT/ndk/25.2.9519653
+#android.ndk_path = $ANDROID_SDK_ROOT/ndk/25.2.9519653
 
 # (str) Android SDK directory (if empty, it will be automatically downloaded.)
 #android.sdk_path =
@@ -156,7 +166,7 @@ android.ndk_path = $ANDROID_SDK_ROOT/ndk/25.2.9519653
 # (str) Full name including package path of the Java class that implements Python Service
 # use that parameter to set custom Java class which extends PythonService
 #android.service_class_name = org.kivy.android.PythonService
-android.num_workers = 1
+#android.num_workers = 1
 # (str) Android app theme, default is ok for Kivy-based app
 # android.apptheme = "@android:style/Theme.NoTitleBar"
 
@@ -207,7 +217,7 @@ android.num_workers = 1
 # contains an 'androidx' package, or any package from Kotlin source.
 # android.enable_androidx requires android.api >= 28
 #android.enable_androidx = True
-android.permissions = INTERNET, WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE
+#android.permissions = INTERNET, WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE
 
 # (list) add java compile options
 # this can for example be necessary when importing certain java libraries using the 'android.gradle_dependencies' option
@@ -284,18 +294,18 @@ android.permissions = INTERNET, WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE
 
 # (list) The Android archs to build for, choices: armeabi-v7a, arm64-v8a, x86, x86_64
 # In past, was `android.arch` as we weren't supporting builds for multiple archs at the same time.
-android.archs = arm64-v8a, armeabi-v7a
+#android.archs = arm64-v8a, armeabi-v7a
 
 # (int) overrides automatic versionCode computation (used in build.gradle)
 # this is not the same as app version and should only be edited if you know what you're doing
 # android.numeric_version = 1
 
 # (bool) enables Android auto backup feature (Android API >=23)
-android.allow_backup = True
+#android.allow_backup = True
 
 # (str) XML file for custom backup rules (see official auto backup documentation)
 # android.backup_rules =
-android.allow-armeabi-v7a = False
+#android.allow-armeabi-v7a = False
 
 # (str) If you need to insert variables into your AndroidManifest.xml file,
 # you can do so with the manifestPlaceholders property.
@@ -323,7 +333,7 @@ android.allow-armeabi-v7a = False
 #p4a.fork = kivy
 
 # (str) python-for-android branch to use, defaults to master
-p4a.branch =  develop
+#p4a.branch =  develop
 
 # (str) python-for-android specific commit to use, defaults to HEAD, must be within p4a.branch
 #p4a.commit = HEAD
@@ -357,7 +367,7 @@ p4a.branch =  develop
 
 #
 # iOS specific
-android.release = 0
+#android.release = 0
 
 
 # (str) Path to a custom kivy-ios folder
