@@ -83,3 +83,13 @@ jobs:
         with:
           name: buildozer-log
           path: buildozer_log.txt
+
+      - name: Cleanup Old Buildozer Files (Fix Read of Closed File)
+        run: |
+          rm -rf .buildozer
+          rm -rf .gradle
+          rm -rf .android
+          rm -rf $HOME/.buildozer
+          rm -rf $HOME/.gradle
+          rm -rf $HOME/.android
+
