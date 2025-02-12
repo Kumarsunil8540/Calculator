@@ -14,6 +14,15 @@ jobs:
         with:
           python-version: "3.10"
 
+      - name: Cleanup Old Buildozer Files (Fix Read of Closed File)
+        run: |
+          rm -rf .buildozer
+          rm -rf .gradle
+          rm -rf .android
+          rm -rf $HOME/.buildozer
+          rm -rf $HOME/.gradle
+          rm -rf $HOME/.android
+
       - name: Install dependencies
         run: |
           sudo apt update
@@ -21,13 +30,13 @@ jobs:
           pip install --upgrade pip
           pip install buildozer cython
 
-      - name: Manually Install Python-for-Android  # ✅ FIX: Clone & Install Manually
+      - name: Manually Install Python-for-Android
         run: |
           git clone --depth=1 https://github.com/kivy/python-for-android.git
           cd python-for-android
           pip install .
 
-      - name: Install Android SDK & NDK (Manual Fix)  # ✅ FIX: NDK Manually Install
+      - name: Install Android SDK & NDK (Manual Install)
         run: |
           export ANDROID_SDK_ROOT=$HOME/android-sdk
           export ANDROID_HOME=$ANDROID_SDK_ROOT
@@ -43,21 +52,17 @@ jobs:
           yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --licenses
           
           # ✅ MANUALLY INSTALL NDK (FIX)
-          $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --sdk_root=$ANDROID_SDK_ROOT "ndk;25.2.9519653"
+          wget https://dl.google.com/android/repository/android-ndk-r25b-linux.zip -O android-ndk.zip
+          unzip android-ndk.zip -d $ANDROID_SDK_ROOT/ndk/
+          mv $ANDROID_SDK_ROOT/ndk/android-ndk-r25b $ANDROID_SDK_ROOT/ndk/25.2.9519653
           export ANDROID_NDK_HOME=$ANDROID_SDK_ROOT/ndk/25.2.9519653
           export ANDROID_NDK=$ANDROID_SDK_ROOT/ndk/25.2.9519653
           export PATH=$ANDROID_NDK:$PATH
 
-      - name: Fix Buildozer Memory Issue  # ✅ Prevent Build Crashes
-        run: |
-          mkdir -p /home/runner/work/Calculator/Calculator/.buildozer/android/platform/python-for-android
-          buildozer android clean  # ✅ Purana Cache Delete Karein
-          rm -rf ~/.cython  # ✅ Cython Cache Delete Karein
-
       - name: Build APK
         env:
-          P4A_NO_PREBUILT_DEPS: 1  # ✅ Fix Prebuilt Packages Issue
-          P4A_NUM_CORES: 1  # ✅ Single-Core Mode Me Run Karein
+          P4A_NO_PREBUILT_DEPS: 1
+          P4A_NUM_CORES: 1
         run: |
           export ANDROID_SDK_ROOT=$HOME/android-sdk
           export ANDROID_HOME=$ANDROID_SDK_ROOT
@@ -65,11 +70,7 @@ jobs:
           export ANDROID_NDK=$ANDROID_SDK_ROOT/ndk/25.2.9519653
           export PATH=$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$ANDROID_SDK_ROOT/platform-tools:$ANDROID_SDK_ROOT/emulator:$ANDROID_SDK_ROOT/tools/bin:$ANDROID_NDK:$PATH
           
-          buildozer -v android debug 2>&1 | tee buildozer_log.txt  # ✅ Build Log Save Karein
-
-      - name: Debugging - Check Bin Folder  # ✅ Bin Folder Exist Check Karein
-        run: |
-          ls -lah bin/
+          buildozer -v android debug 2>&1 | tee buildozer_log.txt
 
       - name: Upload APK
         if: success()
@@ -78,18 +79,8 @@ jobs:
           name: kivy-apk
           path: bin/*.apk
 
-      - name: Upload Build Log  # ✅ Agar APK fail ho gaya to log file bhejein
+      - name: Upload Build Log
         uses: actions/upload-artifact@v4
         with:
           name: buildozer-log
           path: buildozer_log.txt
-
-      - name: Cleanup Old Buildozer Files (Fix Read of Closed File)
-        run: |
-          rm -rf .buildozer
-          rm -rf .gradle
-          rm -rf .android
-          rm -rf $HOME/.buildozer
-          rm -rf $HOME/.gradle
-          rm -rf $HOME/.android
-
