@@ -89,8 +89,3 @@ jobs:
         with:
           name: buildozer-log
           path: buildozer_log.txt
-          
-      - name: Check `bin/` Folder (APK File Exist?)
-        run: |
-          echo "Checking bin/ folder..."
-          ls -lah bin/ || echo "❌ bin/ folder NOT found!"
