@@ -45,7 +45,17 @@ version = 0.1
 
 # (str) Presplash of the application
 #presplash.filename = %(source.dir)s/data/presplash.png
-
+android.api = 34
+android.sdk = 34
+android.ndk = 25.2.9519653
+android.ndk_api = 21
+android.ndk_path = $HOME/android-sdk/ndk/25.2.9519653
+p4a.branch = develop
+requirements = python3,kivy
+android.archs = arm64-v8a
+android.allow-armeabi-v7a = False
+android.num_workers = 1
+android.release = 0
 # (str) Icon of the application
 #icon.filename = %(source.dir)s/data/icon.png
 
@@ -74,18 +84,8 @@ osx.kivy_version = 1.9.1
 #
 
 # (bool) Indicate if the application should be fullscreen or not
-fullscreen = 0
-android.api = 34
-android.sdk = 34
-android.ndk = 25.2.9519653
-android.ndk_api = 21
-android.ndk_path = $HOME/android-sdk/ndk/25.2.9519653
-p4a.branch = develop
-requirements = python3,kivy
-android.arch = arm64-v8a
-android.allow-armeabi-v7a = False
-android.num_workers = 1
-android.release = 0
+
+
 # (string) Presplash background color (for android toolchain)
 # Supported formats are: #RRGGBB #AARRGGBB or one of the following names:
 # red, blue, green, black, white, gray, cyan, magenta, yellow, lightgray,
