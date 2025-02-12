@@ -14,14 +14,9 @@ jobs:
         with:
           python-version: "3.10"
 
-      - name: Cleanup Old Buildozer Files (Fix Read of Closed File)
+      - name: Cleanup Old Buildozer Files
         run: |
-          rm -rf .buildozer
-          rm -rf .gradle
-          rm -rf .android
-          rm -rf $HOME/.buildozer
-          rm -rf $HOME/.gradle
-          rm -rf $HOME/.android
+          rm -rf .buildozer .gradle .android $HOME/.buildozer $HOME/.gradle $HOME/.android
 
       - name: Install dependencies
         run: |
@@ -51,10 +46,10 @@ jobs:
           chmod +x $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager
           yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --licenses
           
-          # ✅ MANUALLY INSTALL NDK (FIX)
-          wget https://dl.google.com/android/repository/android-ndk-r25b-linux.zip -O android-ndk.zip
+          # ✅ FIX: MANUALLY INSTALL NDK
+          wget https://dl.google.com/android/repository/android-ndk-r25c-linux.zip -O android-ndk.zip
           unzip android-ndk.zip -d $ANDROID_SDK_ROOT/ndk/
-          mv $ANDROID_SDK_ROOT/ndk/android-ndk-r25b $ANDROID_SDK_ROOT/ndk/25.2.9519653
+          mv $ANDROID_SDK_ROOT/ndk/android-ndk-r25c $ANDROID_SDK_ROOT/ndk/25.2.9519653
           export ANDROID_NDK_HOME=$ANDROID_SDK_ROOT/ndk/25.2.9519653
           export ANDROID_NDK=$ANDROID_SDK_ROOT/ndk/25.2.9519653
           export PATH=$ANDROID_NDK:$PATH
