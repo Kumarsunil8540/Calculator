@@ -46,7 +46,7 @@ jobs:
           chmod +x $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager
           yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --licenses
           
-          # ✅ FIX: MANUALLY INSTALL NDK
+          # ✅ MANUALLY INSTALL NDK
           wget https://dl.google.com/android/repository/android-ndk-r25b-linux.zip -O android-ndk.zip
           unzip android-ndk.zip -d $ANDROID_SDK_ROOT/ndk/
           mv $ANDROID_SDK_ROOT/ndk/android-ndk-r25b $ANDROID_SDK_ROOT/ndk/25.2.9519653
@@ -67,6 +67,15 @@ jobs:
           
           buildozer -v android debug 2>&1 | tee buildozer_log.txt
 
+      - name: Check APK File Exists
+        run: |
+          if [ -f bin/*.apk ]; then
+            echo "✅ APK file generated successfully!"
+          else
+            echo "❌ APK file NOT found! Build failed!"
+            exit 1
+          fi
+
       - name: Upload APK
         if: success()
         uses: actions/upload-artifact@v4
@@ -79,6 +88,3 @@ jobs:
         with:
           name: buildozer-log
           path: buildozer_log.txt
-      - name : sk 
-          ls -lah bin/
-
